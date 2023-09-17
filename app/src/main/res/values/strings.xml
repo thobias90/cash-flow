@@ -1,5 +1,12 @@
 <resources>
     <string name="app_name">cash-flow</string>
+    <string name="add">Add</string>
+    <string name="balance">Balance</string>
+    <string name="entries">Entries</string>
+    <string name="date">Date</string>
+    <string name="detail">Detail</string>
+    <string name="type">Type</string>
+    <string name="value">Value</string>
     <string-array name="cash_options">
         <item>Credit</item>
         <item>Debit</item>

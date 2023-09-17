@@ -9,14 +9,122 @@
     tools:visibility="visible">
 
     <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="match_parent"
+        android:id="@+id/cashType"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginTop="16dp"
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tvType"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/type"
+        app:layout_constraintBottom_toBottomOf="@+id/cashType"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/cashType" />
+
+    <TextView
+        android:id="@+id/tvDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/detail"
+        app:layout_constraintBottom_toBottomOf="@+id/cashDetail"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/cashDetail" />
+
+    <TextView
+        android:id="@+id/tvValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/value"
+        app:layout_constraintBottom_toBottomOf="@+id/etValue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/etValue" />
+
+    <TextView
+        android:id="@+id/tvDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/date"
+        app:layout_constraintBottom_toBottomOf="@+id/etDate"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/etDate" />
+
+    <Spinner
+        android:id="@+id/cashDetail"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="@+id/cashType"
+        app:layout_constraintStart_toStartOf="@+id/cashType"
+        app:layout_constraintTop_toBottomOf="@+id/cashType"
+        tools:ignore="VisualLintBounds" />
+
+    <EditText
+        android:id="@+id/etValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:inputType="number"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="@+id/cashDetail"
+        app:layout_constraintStart_toStartOf="@+id/cashDetail"
+        app:layout_constraintTop_toBottomOf="@+id/cashDetail"
+        tools:ignore="LabelFor,SpeakableTextPresentCheck"
+        android:autofillHints="" />
+
+    <EditText
+        android:id="@+id/etDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:inputType="date"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="@+id/etValue"
+        app:layout_constraintStart_toEndOf="@+id/tvDate"
+        app:layout_constraintStart_toStartOf="@+id/etValue"
+        app:layout_constraintTop_toBottomOf="@+id/etValue"
+        tools:ignore="LabelFor,SpeakableTextPresentCheck"
+        android:autofillHints="" />
+
+    <Button
+        android:id="@+id/btAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/add"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etDate" />
+
+    <Button
+        android:id="@+id/btEntries"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/entries"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btAdd" />
+
+    <Button
+        android:id="@+id/btBalance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/balance"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btEntries" />
 </androidx.constraintlayout.widget.ConstraintLayout>
