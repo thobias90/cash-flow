@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">cash-flow</string>
+    <string name="credit">credit</string>
+    <string name="debit">debit</string>
+    <string name="salary">salary</string>
+    <string name="extra">extra</string>
+    <string name="food">food</string>
+    <string name="transport">transport</string>
+    <string name="health">health</string>
+    <string name="home">home</string>
 </resources>
