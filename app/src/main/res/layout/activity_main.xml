@@ -14,6 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:minHeight="48dp"
+        android:entries="@array/cash_options"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tvType"
         app:layout_constraintTop_toTopOf="parent" />
@@ -66,8 +67,7 @@
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="@+id/cashType"
         app:layout_constraintStart_toStartOf="@+id/cashType"
-        app:layout_constraintTop_toBottomOf="@+id/cashType"
-        tools:ignore="VisualLintBounds" />
+        app:layout_constraintTop_toBottomOf="@+id/cashType" />
 
     <EditText
         android:id="@+id/etValue"

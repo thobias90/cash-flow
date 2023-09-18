@@ -9,30 +9,51 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var spinner: Spinner
+    private lateinit var sCashType: Spinner
+    private lateinit var sCashDetail: Spinner
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        spinner = findViewById(R.id.cashType)
-
-        val adapter = ArrayAdapter.createFromResource(
-            this,
-            R.array.cash_options,
-            android.R.layout.simple_spinner_item)
-
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_item)
-
-        spinner.adapter = adapter
-
-        spinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
+        // Type Spinner
+        sCashType = findViewById(R.id.cashType)
+        sCashType.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                Log.d("..::MY APP", "onItemSelected")
+                val item = p0?.getItemAtPosition(p2)
+                if (item != null) {
+                    setCashDetailData(item.toString())
+                }
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
-                Log.d("..::MY APP", "onNothingSelected")
+                Log.d("..::TYPE SPINNER", "onNothingSelected")
             }
         }
+
+        // Detail Spinner
+        sCashDetail = findViewById(R.id.cashDetail)
+        sCashDetail.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                Log.d("..::DETAIL SPINNER", "onItemSelected")
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                Log.d("..::DETAIL SPINNER", "onNothingSelected")
+            }
+
+        }
+    }
+
+    fun setCashDetailData(type: String) {
+        var arrayListId = R.array.debit_options
+        if (type == "Credit") {
+            arrayListId = R.array.credit_options
+        }
+        val detailAdapter = ArrayAdapter.createFromResource(
+            this,
+            arrayListId,
+            android.R.layout.simple_spinner_item)
+        detailAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        sCashDetail.adapter = detailAdapter
     }
 }
