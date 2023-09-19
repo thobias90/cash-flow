@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.EditText
 import android.widget.Spinner
 import com.stahlt.cash_flow.database.DatabaseHandler
 import com.stahlt.cash_flow.entity.CashEntry
@@ -13,11 +14,16 @@ import com.stahlt.cash_flow.entity.CashEntry
 class MainActivity : AppCompatActivity() {
     private lateinit var sCashType: Spinner
     private lateinit var sCashDetail: Spinner
+    private lateinit var etValue: EditText
+    private lateinit var etDate: EditText
 
     private lateinit var database: DatabaseHandler
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        etValue = findViewById(R.id.etValue)
+        etDate = findViewById(R.id.etDate)
 
         // Type Spinner
         sCashType = findViewById(R.id.cashType)
@@ -64,7 +70,23 @@ class MainActivity : AppCompatActivity() {
         sCashDetail.adapter = detailAdapter
     }
 
-    fun btAddOnClick(view: View) {}
+    fun btAddOnClick(view: View) {
+        val dateRegexPattern = Regex("([0-9]{2})/([0-9]{2})/([0-9]{4})")
+        val type = sCashType.getItemAtPosition(sCashType.selectedItemPosition).toString()
+        val detail = sCashDetail.getItemAtPosition(sCashDetail.selectedItemPosition).toString()
+        if (etValue.text.isEmpty()) {
+            etValue.error = "Value MUST be filled!"
+        } else if (etDate.text.isEmpty()) {
+            etDate.error = "Date MUST be filled!"
+        } else if (!dateRegexPattern.matches(etDate.text.toString())) {
+            etDate.error = "Date MUST be filled as dd/MM/yyyy"
+        } else {
+            val value = etValue.text.toString()
+            val date = etDate.text.toString()
+            val cashEntry = CashEntry(type, detail, value, date)
+            database.create(cashEntry)
+        }
+    }
     fun btEntriesOnClick(view: View) {}
     fun btBalanceOnClick(view: View) {}
 }
