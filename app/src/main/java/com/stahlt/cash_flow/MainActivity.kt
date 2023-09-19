@@ -78,8 +78,6 @@ class MainActivity : AppCompatActivity() {
             etValue.error = "Value MUST be filled!"
         } else if (etDate.text.isEmpty()) {
             etDate.error = "Date MUST be filled!"
-        } else if (!dateRegexPattern.matches(etDate.text.toString())) {
-            etDate.error = "Date MUST be filled as dd/MM/yyyy"
         } else {
             val value = etValue.text.toString()
             val date = etDate.text.toString()
