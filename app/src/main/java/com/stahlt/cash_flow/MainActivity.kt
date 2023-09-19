@@ -7,10 +7,14 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import com.stahlt.cash_flow.database.DatabaseHandler
+import com.stahlt.cash_flow.entity.CashEntry
 
 class MainActivity : AppCompatActivity() {
     private lateinit var sCashType: Spinner
     private lateinit var sCashDetail: Spinner
+
+    private lateinit var database: DatabaseHandler
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -42,6 +46,9 @@ class MainActivity : AppCompatActivity() {
             }
 
         }
+
+        // Database Initialize
+        database = DatabaseHandler(this)
     }
 
     fun setCashDetailData(type: String) {
