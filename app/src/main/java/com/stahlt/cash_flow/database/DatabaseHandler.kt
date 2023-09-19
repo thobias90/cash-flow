@@ -80,21 +80,20 @@ class DatabaseHandler(context: Context):
         return pks
     }
 
-    fun getBalance(): Int {
+    fun getBalance(): Double {
         val db = readableDatabase
         val cursor = db.query(TABLE_NAME, null, null, null, null, null, null)
-        var balance = 0
-        cursor.run {
-            while(moveToNext()) {
-                val type = cursor.getString(TYPE_INDEX)
-                if (type == "Credit") {
-                    balance += cursor.getString(VALUE_INDEX).toInt()
-                } else if (type == "Debit") {
-                    balance -= cursor.getString(VALUE_INDEX).toInt()
-                }
+        var balance = 0.0
+        while(cursor.moveToNext()) {
+            val type = cursor.getString(TYPE_INDEX)
+            if (type == "Credit") {
+                val stringValue = cursor.getString(VALUE_INDEX)
+                balance += stringValue.toDouble()
+            } else if (type == "Debit") {
+                balance -= cursor.getString(VALUE_INDEX).toDouble()
             }
-            close()
         }
+        cursor.close()
         return balance
     }
 }
