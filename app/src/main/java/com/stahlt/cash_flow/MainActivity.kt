@@ -63,4 +63,8 @@ class MainActivity : AppCompatActivity() {
         detailAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         sCashDetail.adapter = detailAdapter
     }
+
+    fun btAddOnClick(view: View) {}
+    fun btEntriesOnClick(view: View) {}
+    fun btBalanceOnClick(view: View) {}
 }
