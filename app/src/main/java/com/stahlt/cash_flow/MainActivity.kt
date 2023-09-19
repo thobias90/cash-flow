@@ -1,5 +1,6 @@
 package com.stahlt.cash_flow
 
+import android.app.DatePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +11,7 @@ import android.widget.EditText
 import android.widget.Spinner
 import com.stahlt.cash_flow.database.DatabaseHandler
 import com.stahlt.cash_flow.entity.CashEntry
+import java.util.Calendar
 
 class MainActivity : AppCompatActivity() {
     private lateinit var sCashType: Spinner
@@ -24,6 +26,25 @@ class MainActivity : AppCompatActivity() {
 
         etValue = findViewById(R.id.etValue)
         etDate = findViewById(R.id.etDate)
+
+        etDate.setOnClickListener {
+            val calendar = Calendar.getInstance()
+
+            val year = calendar.get(Calendar.YEAR)
+            val month = calendar.get(Calendar.MONTH)
+            val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+            val datePickerDialog = DatePickerDialog(
+                this,
+                { view, year, month, day ->
+                    val date = "$day/${month+1}/$year"
+                    etDate.setText(date)
+                },
+                year,
+                month,
+                day)
+            datePickerDialog.show()
+        }
 
         // Type Spinner
         sCashType = findViewById(R.id.cashType)
