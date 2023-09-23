@@ -2,6 +2,7 @@ package com.stahlt.cash_flow.database
 
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import com.stahlt.cash_flow.entity.CashEntry
@@ -11,7 +12,7 @@ class DatabaseHandler(context: Context):
 
     companion object {
         private const val DATABASE_NAME = "dbfile.sqlite"
-        private const val DATABASE_VERSION = 1
+        private const val DATABASE_VERSION = 2
         private const val TABLE_NAME = "cashFlow"
         private const val KEY_ID = "_id"
         private const val KEY_TYPE = "type"
@@ -67,9 +68,16 @@ class DatabaseHandler(context: Context):
         return cashEntry
     }
 
+    fun listCursor(): Cursor {
+       val db = readableDatabase
+       return db.query(TABLE_NAME, null, null, null, null,
+           null, null)
+    }
+
     fun getAllPrimaryKeys(): ArrayList<Int> {
         val db = readableDatabase
-        val cursor = db.query(TABLE_NAME, null, null, null, null, null, null)
+        val cursor = db.query(TABLE_NAME, null, null, null,
+            null, null, null)
         var pks = ArrayList<Int>()
         cursor.run {
             while(moveToNext()) {
