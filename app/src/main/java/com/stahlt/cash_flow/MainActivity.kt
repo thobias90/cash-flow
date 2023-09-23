@@ -1,6 +1,7 @@
 package com.stahlt.cash_flow
 
 import android.app.DatePickerDialog
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -9,9 +10,12 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Spinner
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.stahlt.cash_flow.database.DatabaseHandler
 import com.stahlt.cash_flow.entity.CashEntry
 import java.util.Calendar
+import kotlin.math.roundToInt
 
 class MainActivity : AppCompatActivity() {
     private lateinit var sCashType: Spinner
@@ -92,7 +96,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun btAddOnClick(view: View) {
-        val dateRegexPattern = Regex("([0-9]{2})/([0-9]{2})/([0-9]{4})")
         val type = sCashType.getItemAtPosition(sCashType.selectedItemPosition).toString()
         val detail = sCashDetail.getItemAtPosition(sCashDetail.selectedItemPosition).toString()
         if (etValue.text.isEmpty()) {
@@ -104,8 +107,20 @@ class MainActivity : AppCompatActivity() {
             val date = etDate.text.toString()
             val cashEntry = CashEntry(type, detail, value, date)
             database.create(cashEntry)
+            Toast.makeText(this, "Register Added", Toast.LENGTH_SHORT).show()
         }
     }
-    fun btEntriesOnClick(view: View) {}
-    fun btBalanceOnClick(view: View) {}
+    fun btEntriesOnClick(view: View) {
+        val intent = Intent(this, EntriesActivity::class.java)
+        startActivity(intent)
+    }
+    fun btBalanceOnClick(view: View) {
+        val balance = (database.getBalance() * 100).roundToInt() / 100.0
+        val builder = AlertDialog.Builder(this)
+        with(builder) {
+            setTitle("Balance")
+            setMessage("$balance")
+            show()
+        }
+    }
 }
