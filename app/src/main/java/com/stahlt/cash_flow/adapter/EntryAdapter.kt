@@ -1,30 +1,37 @@
 package com.stahlt.cash_flow.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.database.Cursor
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageButton
+import android.widget.ImageView
+import kotlin.math.roundToInt
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.toColorInt
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.R.*
 import com.stahlt.cash_flow.R
 
-class EntryAdapter(private val context: Context, private val cursor: Cursor): RecyclerView.Adapter<EntryAdapter.ViewHolder>() {
-    class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
+class EntryAdapter(private val context: Context, private var cursor: Cursor) :
+    RecyclerView.Adapter<EntryAdapter.ViewHolder>() {
+    var selectedHolder: ViewHolder? = null
+    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvDate: TextView
         val tvDetail: TextView
         val tvValue: TextView
         val cardElement: CardView
+        var primaryKey: Int?
+
         init {
             tvDate = view.findViewById(R.id.tvDate)
             tvDetail = view.findViewById(R.id.tvDetail)
             tvValue = view.findViewById(R.id.tvValue)
             cardElement = view.findViewById(R.id.cardView)
+            primaryKey = null
         }
     }
 
@@ -41,26 +48,75 @@ class EntryAdapter(private val context: Context, private val cursor: Cursor): Re
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         cursor.moveToPosition(position)
 
+        holder.primaryKey = cursor.getInt(ID_INDEX)
         holder.tvDate.text = cursor.getString(DATE_INDEX)
         holder.tvDetail.text = cursor.getString(DETAIL_INDEX)
-        holder.tvValue.text = cursor.getString(VALUE_INDEX)
-
-        if (cursor.getString(TYPE_INDEX) == "Credit") {
-            holder.cardElement.setCardBackgroundColor("#8BC34A".toColorInt())
-        } else {
-            holder.cardElement.setCardBackgroundColor("#F44336".toColorInt())
+        holder.tvValue.text = buildString {
+            append("$")
+            append(
+                ((cursor.getString(VALUE_INDEX).toDouble() * 100)
+                    .roundToInt() / 100.0)
+                    .toString()
+            )
         }
 
+
+        handleCardColor(holder, false)
+
         holder.cardElement.setOnClickListener {
-            Log.d("CARD", "onClick")
+            if (holder == selectedHolder) {
+                handleCardColor(holder, false)
+                selectedHolder = null
+            }
+
         }
 
         holder.cardElement.setOnLongClickListener {
-            Log.d("CARD", "onLongClick")
+            if (selectedHolder == null) {
+                selectedHolder = holder
+            } else {
+                handleCardColor(selectedHolder, false)
+                selectedHolder = holder
+            }
+            handleCardColor(holder, true)
             true
         }
     }
 
+    @SuppressLint("PrivateResource")
+    private fun handleCardColor(holder: ViewHolder?, selected: Boolean) {
+        val position = holder?.adapterPosition
+        if (position != null) {
+            cursor.moveToPosition(position)
+        }
+
+        if (selected) {
+            holder?.cardElement?.setCardBackgroundColor("#28625B71".toColorInt())
+            holder?.tvValue?.setTextColor(ContextCompat.getColor(context, color.m3_textfield_indicator_text_color))
+            holder?.tvDetail?.setTextColor(ContextCompat.getColor(context, color.m3_textfield_indicator_text_color))
+            holder?.tvDate?.setTextColor(ContextCompat.getColor(context, color.m3_textfield_indicator_text_color))
+        } else {
+            holder?.tvValue?.setTextColor(
+                ContextCompat.getColor(context, color.m3_default_color_primary_text))
+            holder?.tvDetail?.setTextColor(
+                ContextCompat.getColor(context, color.m3_default_color_primary_text))
+            holder?.tvDate?.setTextColor(
+                ContextCompat.getColor(context, color.m3_default_color_primary_text))
+            if (cursor.getString(TYPE_INDEX) == "Credit") {
+                holder?.cardElement?.setCardBackgroundColor("#8BC34A".toColorInt())
+            } else {
+                holder?.cardElement?.setCardBackgroundColor("#F44336".toColorInt())
+            }
+        }
+    }
+
+    fun getSelectedItem(): Int? {
+        return selectedHolder?.primaryKey
+    }
+
+    fun updateCursor(newCursor: Cursor) {
+        cursor = newCursor
+    }
     companion object {
         private const val ID_INDEX = 0
         private const val TYPE_INDEX = 1
