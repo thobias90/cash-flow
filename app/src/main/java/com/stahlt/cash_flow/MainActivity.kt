@@ -107,6 +107,8 @@ class MainActivity : AppCompatActivity() {
             val date = etDate.text.toString()
             val cashEntry = CashEntry(type, detail, value, date)
             database.create(cashEntry)
+            etValue.setText("")
+            etDate.setText("")
             Toast.makeText(this, "Register Added", Toast.LENGTH_SHORT).show()
         }
     }
