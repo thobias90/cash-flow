@@ -68,6 +68,11 @@ class DatabaseHandler(context: Context):
         return cashEntry
     }
 
+    fun delete(id: Int) {
+        val db = writableDatabase
+        db.delete(TABLE_NAME, "$KEY_ID=$id", null)
+    }
+
     fun listCursor(): Cursor {
        val db = readableDatabase
        return db.query(TABLE_NAME, null, null, null, null,
