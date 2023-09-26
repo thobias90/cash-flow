@@ -18,12 +18,13 @@ class EntriesActivity: AppCompatActivity() {
     private lateinit var btDelete: ImageView
     private lateinit var btEdit: ImageView
     private lateinit var database: DatabaseHandler
+    private lateinit var entryAdapter: EntryAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.entries)
 
         database = DatabaseHandler(this)
-        val entryAdapter = EntryAdapter(this, database.listCursor())
+        entryAdapter = EntryAdapter(this, database.listCursor())
         recyclerView = findViewById(R.id.recycler_view)
         recyclerView.adapter = entryAdapter
 
