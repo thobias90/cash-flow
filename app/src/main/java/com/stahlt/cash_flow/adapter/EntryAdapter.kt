@@ -103,9 +103,9 @@ class EntryAdapter(private val context: Context, private var cursor: Cursor) :
             holder?.tvDate?.setTextColor(
                 ContextCompat.getColor(context, color.m3_default_color_primary_text))
             if (cursor.getString(TYPE_INDEX) == "Credit") {
-                holder?.cardElement?.setCardBackgroundColor("#8BC34A".toColorInt())
+                holder?.cardElement?.setCardBackgroundColor("#85bd87".toColorInt())
             } else {
-                holder?.cardElement?.setCardBackgroundColor("#F44336".toColorInt())
+                holder?.cardElement?.setCardBackgroundColor("#f1807e".toColorInt())
             }
         }
     }
