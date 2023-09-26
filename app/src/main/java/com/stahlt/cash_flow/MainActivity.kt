@@ -45,6 +45,7 @@ class MainActivity : AppCompatActivity() {
         btAdd = findViewById(R.id.btAdd)
 
         etDate.setOnClickListener {
+            hideEtValueKeyboard(it)
             val calendar = Calendar.getInstance()
 
             val year = calendar.get(Calendar.YEAR)
@@ -128,6 +129,7 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
     fun btBalanceOnClick(view: View) {
+        hideEtValueKeyboard(view)
         val balance = (database.getBalance() * 100).roundToInt() / 100.0
         val builder = AlertDialog.Builder(this)
         with(builder) {
@@ -135,5 +137,11 @@ class MainActivity : AppCompatActivity() {
             setMessage("$balance")
             show()
         }
+    }
+
+    private fun hideEtValueKeyboard(view: View) {
+        val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE)
+                as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 }
