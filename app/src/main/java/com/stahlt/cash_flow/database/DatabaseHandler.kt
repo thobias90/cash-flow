@@ -68,6 +68,16 @@ class DatabaseHandler(context: Context):
         return cashEntry
     }
 
+    fun update(id: Int, cashEntry: CashEntry) {
+        val db = writableDatabase
+        val register = ContentValues()
+        register.put(KEY_TYPE, cashEntry.type)
+        register.put(KEY_DETAIL, cashEntry.detail)
+        register.put(KEY_VALUE, cashEntry.value)
+        register.put(KEY_DATE, cashEntry.date)
+        db.update(TABLE_NAME, register, "$KEY_ID=$id", null)
+    }
+
     fun delete(id: Int) {
         val db = writableDatabase
         db.delete(TABLE_NAME, "$KEY_ID=$id", null)
