@@ -1,13 +1,18 @@
 package com.stahlt.cash_flow
 
 import android.app.DatePickerDialog
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
+import android.view.inputmethod.InputMethod
+import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.Toast
@@ -22,6 +27,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var sCashDetail: Spinner
     private lateinit var etValue: EditText
     private lateinit var etDate: EditText
+    private lateinit var btBalance: Button
+    private lateinit var btEntries: Button
+    private lateinit var btAdd: Button
 
     private lateinit var database: DatabaseHandler
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,6 +38,11 @@ class MainActivity : AppCompatActivity() {
 
         etValue = findViewById(R.id.etValue)
         etDate = findViewById(R.id.etDate)
+        sCashType = findViewById(R.id.cashType)
+        sCashDetail = findViewById(R.id.cashDetail)
+        btBalance = findViewById(R.id.btBalance)
+        btEntries = findViewById(R.id.btEntries)
+        btAdd = findViewById(R.id.btAdd)
 
         etDate.setOnClickListener {
             val calendar = Calendar.getInstance()
@@ -51,7 +64,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Type Spinner
-        sCashType = findViewById(R.id.cashType)
         sCashType.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 val item = p0?.getItemAtPosition(p2)
@@ -66,7 +78,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Detail Spinner
-        sCashDetail = findViewById(R.id.cashDetail)
         sCashDetail.onItemSelectedListener = object: AdapterView.OnItemSelectedListener{
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 Log.d("..::DETAIL SPINNER", "onItemSelected")
