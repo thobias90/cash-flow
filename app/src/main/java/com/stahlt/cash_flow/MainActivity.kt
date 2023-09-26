@@ -32,9 +32,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btAdd: Button
 
     private lateinit var database: DatabaseHandler
+    private var editId: Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        this.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
 
         etValue = findViewById(R.id.etValue)
         etDate = findViewById(R.id.etDate)
@@ -43,6 +45,47 @@ class MainActivity : AppCompatActivity() {
         btBalance = findViewById(R.id.btBalance)
         btEntries = findViewById(R.id.btEntries)
         btAdd = findViewById(R.id.btAdd)
+
+        editId = intent.getIntExtra("id", 0)
+        if (editId != 0) {
+            etValue.setText(intent.getStringExtra("value"))
+            etDate.setText(intent.getStringExtra("date"))
+            val detail = intent.getStringExtra("detail")
+            if (intent.getStringExtra("type") == "Credit") {
+                sCashType.setSelection(0)
+                sCashDetail.setSelection(
+                    (if (detail == "Salary") {
+                        0
+                    } else {
+                        1
+                    })
+                )
+            } else {
+                sCashType.setSelection(1)
+                sCashDetail.setSelection(
+                    (when (detail) {
+                        "Food" -> {
+                            0
+                        }
+
+                        "Transport" -> {
+                            1
+                        }
+
+                        "Health" -> {
+                            2
+                        }
+
+                        else -> {
+                            3
+                        }
+                    })
+                )
+            }
+            btBalance.visibility = View.INVISIBLE
+            btEntries.visibility = View.INVISIBLE
+            btAdd.text = "Update"
+        }
 
         etDate.setOnClickListener {
             hideEtValueKeyboard(it)
@@ -118,10 +161,22 @@ class MainActivity : AppCompatActivity() {
             val value = etValue.text.toString()
             val date = etDate.text.toString()
             val cashEntry = CashEntry(type, detail, value, date)
-            database.create(cashEntry)
-            etValue.setText("")
-            etDate.setText("")
-            Toast.makeText(this, "Register Added", Toast.LENGTH_SHORT).show()
+            if (btAdd.text.toString() == "Update") {
+                database.update(editId, cashEntry)
+                etValue.setText("")
+                etDate.setText("")
+                hideEtValueKeyboard(view)
+                Toast.makeText(this, "Register Modified", Toast.LENGTH_SHORT).show()
+                finish()
+            } else {
+                database.create(cashEntry)
+                etValue.setText("")
+                etDate.setText("")
+                hideEtValueKeyboard(view)
+                Toast.makeText(this, "Register Added", Toast.LENGTH_SHORT).show()
+            }
+
+
         }
     }
     fun btEntriesOnClick(view: View) {

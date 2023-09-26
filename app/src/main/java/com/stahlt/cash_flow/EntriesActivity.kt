@@ -1,6 +1,7 @@
 package com.stahlt.cash_flow
 
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
@@ -61,19 +62,25 @@ class EntriesActivity: AppCompatActivity() {
                 Toast.makeText(this,
                     "You must SELECT one entry to EDIT", Toast.LENGTH_SHORT).show()
             } else {
-                index += 1
-                val entry: CashEntry? = database.read(index)
-                if (entry != null) {
-                    val string = buildString {
-                        append("$entry.type ")
-                        append("$entry.detail ")
-                        append("$entry.date ")
-                        append(entry.value)
-                    }
-                    Log.d("..::EDIT::..",string)
+                val cashEntry = database.read(index)
+                if (cashEntry != null) {
+                    val intent = Intent(this, MainActivity::class.java)
+                    intent.putExtra("id", index)
+                    intent.putExtra("type", cashEntry.type)
+                    intent.putExtra("detail", cashEntry.detail)
+                    intent.putExtra("date", cashEntry.date)
+                    intent.putExtra("value", cashEntry.value)
+                    startActivity(intent)
                 }
             }
             Log.d("onEdit", "Position $index")
         }
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        entryAdapter.updateCursor(database.listCursor())
+        entryAdapter.selectedHolder = null
+        recyclerView.adapter = entryAdapter
     }
 }
