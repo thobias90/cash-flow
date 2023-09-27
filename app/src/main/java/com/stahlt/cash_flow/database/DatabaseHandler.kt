@@ -12,7 +12,7 @@ class DatabaseHandler(context: Context):
 
     companion object {
         private const val DATABASE_NAME = "dbfile.sqlite"
-        private const val DATABASE_VERSION = 2
+        private const val DATABASE_VERSION = 4
         private const val TABLE_NAME = "cashFlow"
         private const val KEY_ID = "_id"
         private const val KEY_TYPE = "type"
