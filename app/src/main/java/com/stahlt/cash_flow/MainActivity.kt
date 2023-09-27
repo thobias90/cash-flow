@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var database: DatabaseHandler
     private var editId: Int = 0
+    private var selectedDetail: String? = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -49,37 +50,11 @@ class MainActivity : AppCompatActivity() {
         if (editId != 0) {
             etValue.setText(intent.getStringExtra("value"))
             etDate.setText(intent.getStringExtra("date"))
-            val detail = intent.getStringExtra("detail")
+            selectedDetail = intent.getStringExtra("detail")
             if (intent.getStringExtra("type") == "Credit") {
                 sCashType.setSelection(0)
-                sCashDetail.setSelection(
-                    (if (detail == "Salary") {
-                        0
-                    } else {
-                        1
-                    })
-                )
             } else {
                 sCashType.setSelection(1)
-                sCashDetail.setSelection(
-                    (when (detail) {
-                        "Food" -> {
-                            0
-                        }
-
-                        "Transport" -> {
-                            1
-                        }
-
-                        "Health" -> {
-                            2
-                        }
-
-                        else -> {
-                            3
-                        }
-                    })
-                )
             }
             btBalance.visibility = View.INVISIBLE
             btEntries.visibility = View.INVISIBLE
@@ -147,6 +122,17 @@ class MainActivity : AppCompatActivity() {
             android.R.layout.simple_spinner_item)
         detailAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         sCashDetail.adapter = detailAdapter
+        if (selectedDetail != null) {
+            when (selectedDetail) {
+                "Salary" -> sCashDetail.setSelection(0)
+                "Extra" -> sCashDetail.setSelection(1)
+                "Food" -> sCashDetail.setSelection(0)
+                "Transport" -> sCashDetail.setSelection(1)
+                "Health" -> sCashDetail.setSelection(2)
+                "Home" -> sCashDetail.setSelection(3)
+            }
+            selectedDetail = null
+        }
     }
 
     fun btAddOnClick(view: View) {
