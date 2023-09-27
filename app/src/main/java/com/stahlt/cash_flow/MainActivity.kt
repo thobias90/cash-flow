@@ -185,11 +185,13 @@ class MainActivity : AppCompatActivity() {
     }
     fun btBalanceOnClick(view: View) {
         hideEtValueKeyboard(view)
-        val balance = (database.getBalance() * 100).roundToInt() / 100.0
+        val balance = database.getBalance()
         val builder = AlertDialog.Builder(this)
         with(builder) {
             setTitle("Balance")
-            setMessage("$balance")
+            val numberFormat = NumberFormat.getCurrencyInstance()
+            setMessage(numberFormat.format(balance))
+            setPositiveButton("Ok") { _,_ -> closeContextMenu() }
             show()
         }
     }
