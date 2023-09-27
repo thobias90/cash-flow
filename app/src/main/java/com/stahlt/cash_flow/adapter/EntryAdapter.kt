@@ -15,6 +15,7 @@ import androidx.core.graphics.toColorInt
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.R.*
 import com.stahlt.cash_flow.R
+import java.text.NumberFormat
 
 class EntryAdapter(private val context: Context, private var cursor: Cursor) :
     RecyclerView.Adapter<EntryAdapter.ViewHolder>() {
@@ -51,15 +52,8 @@ class EntryAdapter(private val context: Context, private var cursor: Cursor) :
         holder.primaryKey = cursor.getInt(ID_INDEX)
         holder.tvDate.text = cursor.getString(DATE_INDEX)
         holder.tvDetail.text = cursor.getString(DETAIL_INDEX)
-        holder.tvValue.text = buildString {
-            append("$")
-            append(
-                ((cursor.getString(VALUE_INDEX).toDouble() * 100)
-                    .roundToInt() / 100.0)
-                    .toString()
-            )
-        }
-
+        val numberFormat = NumberFormat.getCurrencyInstance()
+        holder.tvValue.text = numberFormat.format(cursor.getString(VALUE_INDEX).toDouble())
 
         handleCardColor(holder, false)
 
