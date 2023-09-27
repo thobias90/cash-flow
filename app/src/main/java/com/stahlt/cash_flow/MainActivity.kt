@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
-import android.view.inputmethod.InputMethod
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -19,8 +18,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.stahlt.cash_flow.database.DatabaseHandler
 import com.stahlt.cash_flow.entity.CashEntry
+import java.text.NumberFormat
 import java.util.Calendar
-import kotlin.math.roundToInt
 
 class MainActivity : AppCompatActivity() {
     private lateinit var sCashType: Spinner
