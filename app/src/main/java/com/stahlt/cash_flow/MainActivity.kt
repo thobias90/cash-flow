@@ -84,7 +84,7 @@ class MainActivity : AppCompatActivity() {
             }
             btBalance.visibility = View.INVISIBLE
             btEntries.visibility = View.INVISIBLE
-            btAdd.text = "Update"
+            btAdd.text = getString(R.string.update)
         }
 
         etDate.setOnClickListener {
