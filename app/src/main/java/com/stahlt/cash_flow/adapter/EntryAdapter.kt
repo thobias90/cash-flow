@@ -64,11 +64,11 @@ class EntryAdapter(private val context: Context, private var cursor: Cursor) :
         }
 
         holder.cardElement.setOnLongClickListener {
-            if (selectedHolder == null) {
-                selectedHolder = holder
+            selectedHolder = if (selectedHolder == null) {
+                holder
             } else {
                 handleCardColor(selectedHolder, false)
-                selectedHolder = holder
+                holder
             }
             handleCardColor(holder, true)
             true
