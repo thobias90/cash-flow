@@ -89,20 +89,6 @@ class DatabaseHandler(context: Context):
            null, null)
     }
 
-    fun getAllPrimaryKeys(): ArrayList<Int> {
-        val db = readableDatabase
-        val cursor = db.query(TABLE_NAME, null, null, null,
-            null, null, null)
-        var pks = ArrayList<Int>()
-        cursor.run {
-            while(moveToNext()) {
-                pks.add(cursor.getInt(ID_INDEX))
-            }
-            close()
-        }
-        return pks
-    }
-
     fun getBalance(): Double {
         val db = readableDatabase
         val cursor = db.query(TABLE_NAME, null, null, null, null, null, null)
