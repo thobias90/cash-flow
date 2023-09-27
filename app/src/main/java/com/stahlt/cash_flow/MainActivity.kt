@@ -71,7 +71,7 @@ class MainActivity : AppCompatActivity() {
 
             val datePickerDialog = DatePickerDialog(
                 this,
-                { view, year, month, day ->
+                { _, year, month, day ->
                     val date = "$day/${month+1}/$year"
                     etDate.setText(date)
                 },

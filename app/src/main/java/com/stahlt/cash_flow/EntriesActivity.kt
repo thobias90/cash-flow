@@ -1,6 +1,5 @@
 package com.stahlt.cash_flow
 
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -11,8 +10,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.stahlt.cash_flow.adapter.EntryAdapter
 import com.stahlt.cash_flow.database.DatabaseHandler
-import com.stahlt.cash_flow.entity.CashEntry
-import java.lang.StringBuilder
 
 class EntriesActivity: AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
@@ -33,7 +30,7 @@ class EntriesActivity: AppCompatActivity() {
         btEdit = findViewById(R.id.btEdit)
 
         btDelete.setOnClickListener {
-            var index = entryAdapter.getSelectedItem()
+            val index = entryAdapter.getSelectedItem()
             if (index == null) {
                 Toast.makeText(this,
                     "You must SELECT one entry to DELETE", Toast.LENGTH_SHORT).show()
@@ -57,7 +54,7 @@ class EntriesActivity: AppCompatActivity() {
         }
 
         btEdit.setOnClickListener {
-            var index = entryAdapter.getSelectedItem()
+            val index = entryAdapter.getSelectedItem()
             if (index == null) {
                 Toast.makeText(this,
                     "You must SELECT one entry to EDIT", Toast.LENGTH_SHORT).show()

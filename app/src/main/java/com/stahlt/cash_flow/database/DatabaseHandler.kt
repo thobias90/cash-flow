@@ -19,7 +19,6 @@ class DatabaseHandler(context: Context):
         private const val KEY_DETAIL = "detail"
         private const val KEY_VALUE = "value"
         private const val KEY_DATE = "date"
-        private const val ID_INDEX = 0
         private const val TYPE_INDEX = 1
         private const val DETAIL_INDEX = 2
         private const val VALUE_INDEX = 3
